@@ -206,5 +206,9 @@ def admin():
     status_df = pd.read_csv(STATUS_FILE)
     return render_template("admin.html", rooms=status_df.to_dict("records"))
 
+# Add this at the very bottom — ONLY CHANGE NEEDED
 if __name__ == "__main__":
-    app.run(debug=True)
+    # For Render.com and local — works everywhere!
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
