@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ room_id }} - BEMS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+  <meta http-equiv="refresh" content="15">
+</head>
+<body class="bg-light">
+  <nav class="navbar navbar-dark bg-success">
+    <div class="container-fluid">
+      <a href="/" class="btn btn-outline-light">Back</a>
+      <h3 class="text-white">{{ room_id }} - AC Monitor & Control</h3>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="row text-center mb-4">
+      <div class="col"><div class="card bg-primary text-white"><h5>Voltage</h5><h3>{{ current_v }} V</h3></div></div>
+      <div class="col"><div class="card bg-warning text-white"><h5>Current</h5><h3>{{ current_i }} A</h3></div></div>
+      <div class="col"><div class="card bg-danger text-white"><h5>Power</h5><h3>{{ current_p }} W</h3></div></div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-3"><div class="card bg-success text-white text-center"><h5>Energy</h5><h4>{{ total_kwh }} kWh</h4></div></div>
+      <div class="col-md-3"><div class="card bg-info text-white text-center"><h5>Bill</h5><h4>৳{{ total_bill }}</h4></div></div>
+      <div class="col-md-3"><div class="card bg-dark text-white text-center"><h5>CO₂</h5><h4>{{ total_carbon }} g</h4></div></div>
+      <div class="col-md-3"><div class="card bg-success text-white text-center"><h5>20% Saving</h5><h4>{{ savings_kwh }} kWh<br>৳{{ savings_tk }}</h4></div></div>
+    </div>
+
+    <form class="row g-3 mb-4">
+      <div class="col-auto"><input type="date" name="start" value="{{ start }}" class="form-control"></div>
+      <div class="col-auto"><input type="date" name="end" value="{{ end }}" class="form-control"></div>
+      <div class="col-auto"><button class="btn btn-primary">Update</button></div>
+    </form>
+
+    <div class="row">
+      <div class="col-12 mb-4">{{ voltage_html|safe }}</div>
+      <div class="col-12 mb-4">{{ current_html|safe }}</div>
+      <div class="col-12 mb-4">{{ power_html|safe }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <form method="POST">
+          <button name="toggle" class="btn btn-lg {{ 'btn-danger' if status=='On' else 'btn-success' }} w-100">
+            Turn {{ 'OFF' if status=='On' else 'ON' }} AC
+          </button>
+        </form>
+      </div>
+      <div class="col-md-6">
+        <form method="POST" class="border p-3 rounded bg-white">
+          <h5>Schedule (No Class = Auto Off)</h5>
+          <div class="row">
+            <div class="col"><input type="time" name="on_time" value="{{ sched_on }}" class="form-control"></div>
+            <div class="col"><input type="time" name="off_time" value="{{ sched_off }}" class="form-control"></div>
+            <div class="col-auto"><button name="schedule" class="btn btn-primary">Set</button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+body { font-family: 'Segoe UI', sans-serif; }
+.room-card { transition: 0.3s; border-radius: 15px; }
+.room-card:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+.bg-on { background: linear-gradient(135deg, #55efc4, #00b894); color: white; }
+.bg-off { background: linear-gradient(135deg, #fab1a0, #e17055); color: white; }
+.card { border-radius: 15px; }
